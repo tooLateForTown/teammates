@@ -7,6 +7,7 @@ import { AccountService } from '../../../../services/account.service';
 import { AccountCreateRequest } from '../../../../types/api-request';
 import { FormValidator } from '../../../../types/form-validator';
 import { ErrorMessageOutput } from '../../../error-message-output';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'tm-instructor-request-form',
@@ -15,7 +16,7 @@ import { ErrorMessageOutput } from '../../../error-message-output';
 })
 export class InstructorRequestFormComponent {
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
   // Create members to be accessed in template
   readonly STUDENT_NAME_MAX_LENGTH = FormValidator.STUDENT_NAME_MAX_LENGTH;
@@ -149,5 +150,21 @@ export class InstructorRequestFormComponent {
           this.serverErrorMessage = resp.error.message;
         },
       });
+  }
+
+   /**
+   * Handles cancel action with confirmation if the form is dirty.
+   */
+  onCancel(): void {
+    // Check if any form control is dirty
+    const isFormDirty = Object.values(this.arf.controls).some(control => control.dirty);
+    if (isFormDirty) {
+      const confirmed = confirm('Are you sure you want to cancel? You will lose all unsaved changes.');
+      if (confirmed) {
+        this.router.navigate(['/web/front/home']);
+      }
+    } else {
+      this.router.navigate(['/web/front/home']);
+    }
   }
 }

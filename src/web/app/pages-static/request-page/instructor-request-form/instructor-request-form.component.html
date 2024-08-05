@@ -11,7 +11,7 @@
       This is the name that will be shown to your students. You may include salutation (Dr. Prof. etc.)
     </p>
     <input class="form-control {{getFieldValidationClasses(name)}}" type="text" id="name" autocomplete="name"
-      [formControl]="name" [required]="checkIsFieldRequired(name)" [attr.aria-invalid]="name.invalid">
+      [formControl]="name" [required]="checkIsFieldRequired(name)" [attr.aria-invalid]="name.invalid" (change)="name.markAsDirty()">
     <div *ngIf="name.errors?.['required']" role="alert" aria-describedby="name-label" tabindex="0" class="invalid-feedback">
       Please enter your name.
     </div>
@@ -33,7 +33,7 @@
     </p>
     <input class="form-control {{getFieldValidationClasses(institution)}}" type="text" id="institution"
       autocomplete="organization" [formControl]="institution" [required]="checkIsFieldRequired(institution)"
-      [attr.aria-invalid]="institution.invalid">
+      [attr.aria-invalid]="institution.invalid" (change)="name.markAsDirty()">
     <div *ngIf="institution.errors?.['required']" role="alert" aria-describedby="institution-label" tabindex="0"
       class="invalid-feedback">
       Please enter your institution name.
@@ -57,7 +57,7 @@
     </p>
     <input class="form-control {{getFieldValidationClasses(country)}}" type="text" id="country"
       autocomplete="country-name" [formControl]="country" [required]="checkIsFieldRequired(country)"
-      [attr.aria-invalid]="country.invalid">
+      [attr.aria-invalid]="country.invalid" (change)="name.markAsDirty()">
     <div *ngIf="country.errors?.['required']" role="alert" aria-describedby="country-label" tabindex="0"
       class="invalid-feedback">
       Please enter your institution's country.
@@ -82,7 +82,7 @@
       Note that this email address will be visible to the students you enroll in TEAMMATES.
     </p>
     <input class="form-control {{getFieldValidationClasses(email)}}" type="email" id="email" autocomplete="email"
-      [formControl]="email" [required]="checkIsFieldRequired(email)" [attr.aria-invalid]="email.invalid">
+      [formControl]="email" [required]="checkIsFieldRequired(email)" [attr.aria-invalid]="email.invalid" (change)="name.markAsDirty()">
     <div *ngIf="email.errors?.['required']" role="alert" aria-describedby="email-label" tabindex="0"
       class="invalid-feedback">
       Please enter your email address.
@@ -102,7 +102,7 @@
       Any other comments/queries
     </label>
     <textarea class="form-control {{getFieldValidationClasses(comments)}}" id="comments" [formControl]="comments"
-      [attr.aria-invalid]="comments.invalid"></textarea>
+      [attr.aria-invalid]="comments.invalid" (change)="name.markAsDirty()"></textarea>
   </div>
   <br>
   <div *ngIf="captchaSiteKey !== ''" class="form-group">
@@ -130,7 +130,7 @@
   <button type="submit" class="btn btn-primary" id="submit-button" [disabled]="!canSubmit">
     {{isLoading ? "Submitting..." : "Submit"}}
   </button>
-    <button type="button" class="btn btn-danger ms-3" id="cancel-button" [routerLink]="['/web/front/home']">
+    <button type="button" class="btn btn-danger ms-3" id="cancel-button" (click)="onCancel()">
       Cancel
     </button>
 </form>
